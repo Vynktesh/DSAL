@@ -66,68 +66,94 @@ void insertNode(Node* root,Node* node)
 
 }
 
-int longestPath(Node* root)
+int longestPath(Node* root,int level)
 {
 
-	return 0;
+	if(root==NULL)
+	{
+		return level;
+	}
+
+	return max(longestPath(root->left,level+1),longestPath(root->right,level+1));
 }
 
 int min(Node* root)
 {
-
-	return 0;
+	
+	while(root->left!=NULL)
+	{
+		root=root->left;
+	}
+	
+	return root->ele;
 }
 
 bool search(Node* root,int ele)
 {
 
-	return true;
+	while(root!=NULL)
+	{
+		if(root->ele==ele)
+		{
+			return true;
+		}
+		else if(root->ele<ele)
+		{
+			root=root->left;
+		}
+		else
+		{
+			root=root->right;
+		}
+	}
+	return false;
 }
 
 void swap(Node* root)
 {
+	if(root==NULL)
+	{
+		return;
+	}
+	
+	swap(root->left);
+	swap(root->right);
+	
+	Node * temp = root->left;
+	root->left = root->right;
+	root->right = temp;
+	
+	return;
 
 
 }
 
 int main()
 {
-	Node* root = new Node(10);
-	Node* temp=NULL;
-	
-	temp=new Node(4);
-	insertNode(root,temp);
-
-
-	temp=new Node(3);
-	insertNode(root,temp);
-	
-	
-	temp=new Node(6);
-	insertNode(root,temp);
-	
-	
-	temp=new Node(9);
-	insertNode(root,temp);
-	
-	
-	temp=new Node(13);
-	insertNode(root,temp);
-	
-	
-	temp=new Node(5);
-	insertNode(root,temp);
-	
-	
-	temp=new Node(20);
-	insertNode(root,temp);
-	
-	
-	temp=new Node(12);
-	insertNode(root,temp);
-
+	int len;
+	cout<<"Enter how many elements you want to enter :";
+	cin>>len;
+	int ele;
+	cin>>ele;
+	Node* root = new Node(ele);
+	for(int i=1;i<len;i++)
+	{
+		
+		cin>>ele;
+		insertNode(root,new Node(ele));
+	}
+	cout<<endl;
 	inOrder(root);
-
+	cout<<endl;
+	
+	swap(root);
+	
+	cout<<endl;
+	inOrder(root);
+	cout<<endl;
+	
+	
+	
 }
 
 
